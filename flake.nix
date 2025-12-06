@@ -92,7 +92,7 @@
                                                                                         } ;
                                                                                 observed = builtins.readFile file ;
                                                                             in
-                                                                                if expected == observed then
+                                                                                if builtins.readFile expected == observed then
                                                                                     ''
                                                                                         OUT="$1"
                                                                                         touch "$OUT"
@@ -102,11 +102,10 @@
                                                                                         OUT="$1"
                                                                                         touch "$OUT"
                                                                                         echo EXPECTED
-                                                                                        cat ${ builtins.toFile "expected" expected }
+                                                                                        cat ${ expected }
                                                                                         echo
                                                                                         echo OBSERVED
                                                                                         echo ${ file }
-                                                                                        cat ${ file }
                                                                                         echo
                                                                                         diff --unified ${ builtins.toFile "expected" expected } ${ file }
                                                                                         failure a4f6643f
