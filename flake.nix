@@ -24,7 +24,7 @@
                                                             pkgs.flock
                                                             pkgs.jq
                                                             pkgs.redis
-                                                            pkgs.yq
+                                                            pkgs.yq-go
                                                             failure
                                                             (
                                                                 pkgs.writeShellApplication
