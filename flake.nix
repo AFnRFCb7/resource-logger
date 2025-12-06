@@ -15,7 +15,7 @@
                                 } :
                                     let
                                         application =
-                                            writeShellApplication
+                                            pkgs.writeShellApplication
                                                 {
                                                     name = "implementation" ;
                                                     runtimeInputs =
