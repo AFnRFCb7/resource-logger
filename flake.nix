@@ -8,16 +8,16 @@
                         let
                             implementation =
                                 {
-                                    channel ,
+                                    channel ? "redis" ,
                                     log-directory ,
                                     log-file ? "log.yaml" ,
-                                    log-lock ? "log.lock" ,
+                                    log-lock ? "log.lock"
                                 } :
                                     let
                                         application =
-                                            writeShellApplication
+                                            pkgs.writeShellApplication
                                                 {
-                                                    name = "implementation" ;
+                                                    name = "resource-logger" ;
                                                     runtimeInputs =
                                                         [
                                                             pkgs.coreutils
@@ -53,24 +53,21 @@
                                                                 read -r PAYLOAD || failure 3b7888f3
                                                                 if [[ "message" == "$TYPE" ]]
                                                                 then
-                                                                    export ARGUMENTS="\$ARGUMENTS"
-                                                                    export ARGUMENTS_JSON="\$ARGUMENTS_JSON"
-                                                                    export HAS_STANDARD_INPUT="\$HAS_STANDARD_INPUT"
-                                                                    export JSON="\$JSON"
                                                                     iteration "$CHANNEL" "$PAYLOAD" &
                                                                 fi
                                                             done
                                                         '' ;
                                                 } ;
+                                        in "${ application }/bin/resource-logger" ;
                             in
                                 {
                                     check =
                                         {
-                                            channel ,
+                                            channel ? "8abec172" ,
                                             expected ,
-                                            log-directory ,
-                                            log-file ,
-                                            log-lock
+                                            log-directory ? "bc20f63b" ,
+                                            log-file ? "2555b21b" ,
+                                            log-lock ? "b07f0f0a" ,
                                         } :
                                             pkgs.stdenv.mkDerivation
                                                 {
@@ -79,47 +76,37 @@
                                                     nativeBuildInputs =
                                                         [
                                                             (
-                                                                pkgs.writeShellApplication
-                                                                    {
-                                                                        name = "execute-test" ;
-                                                                        runtimeInputs = [ pkgs.coreutils pkgs.diffutils ] ;
-                                                                        text =
-                                                                            let
-                                                                                observed =
-                                                                                    implementation
-                                                                                        {
-                                                                                            channel = channel ;
-                                                                                            log-directory = log-directory ;
-                                                                                            log-file = log-file ;
-                                                                                            log-lock = log-lock ;
-                                                                                        } ;
-                                                                            in
-                                                                                if expected == observed then
-                                                                                    ''
-                                                                                        OUT="$1"
-                                                                                        touch "$OUT"
-                                                                                    ''
-                                                                                else
-                                                                                    ''
-                                                                                        OUT="$1"
-                                                                                        touch "$OUT"
-                                                                                        echo EXPECTED
-                                                                                        echo ${ expected }
-                                                                                        cat ${ expected }
-                                                                                        echo
-                                                                                        echo OBSERVED
-                                                                                        echo ${ observed }
-                                                                                        cat ${ observed }
-                                                                                        echo
-                                                                                        diff --unified ${ expected } ${ observed }
-                                                                                        failure a4f6643f
-                                                                                    '' ;
-                                                                    }
+                                                                let
+                                                                    observed = builtins.toString ( implementation { channel = channel ; log-directory = log-directory ; log-file = log-file ; log-lock = log-lock ; } ) ;
+                                                                    in
+                                                                        if expected == observed then
+                                                                           pkgs.writeShellApplication
+                                                                                {
+                                                                                    name = "execute-test" ;
+                                                                                    runtimeInputs = [ pkgs.coreutils ] ;
+                                                                                    text =
+                                                                                        ''
+                                                                                            OUT="$1"
+                                                                                            touch "$OUT"
+                                                                                        '' ;
+                                                                                }
+                                                                        else
+                                                                            pkgs.writeShellApplication
+                                                                                {
+                                                                                    name = "execute-test" ;
+                                                                                    runtimeInputs = [ pkgs.coreutils failure ] ;
+                                                                                    text =
+                                                                                        ''
+                                                                                            OUT="$1"
+                                                                                            touch "$OUT"
+                                                                                            failure a4f6643f "We expected ${ expected } but observed ${ observed }"
+                                                                                        '' ;
+                                                                                }
                                                             )
                                                         ] ;
                                                     src = ./. ;
                                                 } ;
                                     implementation = implementation ;
                                 } ;
-            }
+            } ;
 }
