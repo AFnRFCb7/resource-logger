@@ -102,15 +102,11 @@
                                                                                         OUT="$1"
                                                                                         touch "$OUT"
                                                                                         echo EXPECTED
-                                                                                        cat <<EOF
-                                                                                        ${ expected }
-                                                                                        EOF
+                                                                                        cat ${ builtins.toFile "expected" expected }
                                                                                         echo
                                                                                         echo OBSERVED
                                                                                         echo ${ file }
-                                                                                        cat <<EOF
-                                                                                        ${ observed }
-                                                                                        EOF
+                                                                                        cat ${ file }
                                                                                         echo
                                                                                         diff --unified ${ builtins.toFile "expected" expected } ${ file }
                                                                                         failure a4f6643f
