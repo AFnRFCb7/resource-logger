@@ -92,7 +92,7 @@
                                                                                             log-lock = log-lock ;
                                                                                         } ;
                                                                             in
-                                                                                if builtins.readFile expected == observed then
+                                                                                if expected-file == observed-file then
                                                                                     ''
                                                                                         OUT="$1"
                                                                                         touch "$OUT"
