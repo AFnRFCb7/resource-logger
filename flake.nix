@@ -53,15 +53,12 @@
                                                                 read -r PAYLOAD || failure 3b7888f3
                                                                 if [[ "message" == "$TYPE" ]]
                                                                 then
-                                                                    export ARGUMENTS="\$ARGUMENTS"
-                                                                    export ARGUMENTS_JSON="\$ARGUMENTS_JSON"
-                                                                    export HAS_STANDARD_INPUT="\$HAS_STANDARD_INPUT"
-                                                                    export JSON="\$JSON"
                                                                     iteration "$CHANNEL" "$PAYLOAD" &
                                                                 fi
                                                             done
                                                         '' ;
                                                 } ;
+                                        in "${ application }/bin/implementation" ;
                             in
                                 {
                                     check =
@@ -121,5 +118,5 @@
                                                 } ;
                                     implementation = implementation ;
                                 } ;
-            }
+            } ;
 }
