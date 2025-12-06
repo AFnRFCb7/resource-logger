@@ -8,7 +8,7 @@
                         let
                             implementation =
                                 {
-                                    channel ,
+                                    channel ? "redis" ,
                                     log-directory ,
                                     log-file ? "log.yaml" ,
                                     log-lock ? "log.lock" ,
@@ -66,11 +66,11 @@
                                 {
                                     check =
                                         {
-                                            channel ,
+                                            channel ? "redis" ,
                                             expected ,
                                             log-directory ,
-                                            log-file ,
-                                            log-lock
+                                            log-file ? "log.yaml" ,
+                                            log-lock ? "log.lock"
                                         } :
                                             pkgs.stdenv.mkDerivation
                                                 {
