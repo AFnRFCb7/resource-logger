@@ -82,7 +82,8 @@
                                                                         runtimeInputs = [ pkgs.coreutils pkgs.diffutils ] ;
                                                                         text =
                                                                             let
-                                                                                file =
+                                                                                expected-file = builtins.toFile "expected" expected ;
+                                                                                observed-file =
                                                                                     implementation
                                                                                         {
                                                                                             channel = channel ;
@@ -90,7 +91,6 @@
                                                                                             log-file = log-file ;
                                                                                             log-lock = log-lock ;
                                                                                         } ;
-                                                                                observed = builtins.readFile file ;
                                                                             in
                                                                                 if builtins.readFile expected == observed then
                                                                                     ''
@@ -102,12 +102,12 @@
                                                                                         OUT="$1"
                                                                                         touch "$OUT"
                                                                                         echo EXPECTED
-                                                                                        cat ${ expected }
+                                                                                        echo ${ expected-file }
                                                                                         echo
                                                                                         echo OBSERVED
-                                                                                        echo ${ file }
+                                                                                        echo ${ observed-file }
                                                                                         echo
-                                                                                        diff --unified ${ builtins.toFile "expected" expected } ${ file }
+                                                                                        diff --unified ${ expected-file } ${ observed-file }
                                                                                         failure a4f6643f
                                                                                     '' ;
                                                                     }
