@@ -41,7 +41,7 @@
                                                                                 mkdir --parents ${ log-directory }
                                                                                 exec 203> ${ log-directory }/${ log-lock }
                                                                                 flock 203
-                                                                                yq eval --prettyPrint "$TEMPORARY" '[.]' >> ${ log-directory }/${ log-file }
+                                                                                yq eval --prettyPrint '[.]' "$TEMPORARY" >> ${ log-directory }/${ log-file }
                                                                                 rm "$TEMPORARY"
                                                                             '' ;
                                                                     }
