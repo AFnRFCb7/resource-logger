@@ -21,7 +21,10 @@
                                                     runtimeInputs =
                                                         [
                                                             pkgs.coreutils
+                                                            pkgs.flock
+                                                            pkgs.jq
                                                             pkgs.redis
+                                                            pkgs.yq
                                                             failure
                                                             (
                                                                 pkgs.writeShellApplication
