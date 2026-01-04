@@ -90,6 +90,7 @@
                                             log-directory ? "bc20f63b" ,
                                             log-file ? "2555b21b" ,
                                             log-lock ? "b07f0f0a" ,
+
                                             user ? "a2ce8612"
                                         } :
                                             pkgs.stdenv.mkDerivation
