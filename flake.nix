@@ -106,6 +106,7 @@
                                                                                 channel = channel ;
                                                                                 description = description ;
                                                                                 expected = expected ;
+                                                                                enable = enable ;
                                                                                 log-directory = log-directory ;
                                                                                 log-file = log-file ;
                                                                                 log-lock = log-lock ;
