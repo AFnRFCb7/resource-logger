@@ -8,10 +8,10 @@
                         let
                             implementation =
                                 {
-                                    channel ? "redis" ,
+                                    channel ,
                                     log-directory ,
-                                    log-file ? "log.yaml" ,
-                                    log-lock ? "log.lock"
+                                    log-file ,
+                                    log-lock
                                 } :
                                     let
                                         application =
