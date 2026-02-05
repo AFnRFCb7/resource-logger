@@ -54,6 +54,7 @@
                                                                 read -r TYPE || failure c5aa2fb4
                                                                 read -r CHANNEL || failure 9c77b920
                                                                 read -r PAYLOAD || failure 3b7888f3
+                                                                echo "RECEIVED TYPE=$TYPE CHANNEL=$CHANNEL"
                                                                 if [[ "message" == "$TYPE" ]]
                                                                 then
                                                                     iteration "$CHANNEL" "$PAYLOAD" &
