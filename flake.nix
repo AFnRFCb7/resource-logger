@@ -43,6 +43,7 @@
                                                                                 flock 203
                                                                                 yq eval --prettyPrint '[.]' "$TEMPORARY" >> ${ log-directory }/${ log-file }
                                                                                 rm "$TEMPORARY"
+
                                                                             '' ;
                                                                     }
                                                             )
